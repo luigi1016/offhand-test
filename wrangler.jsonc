@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "offhand-test",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // The Worker's address, <name>.<account>.workers.dev. Stated rather than left to the default:
+  // a Worker made by Deploy to Cloudflare came up with it switched off.
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  // Holds the offhand token, Roma's sign-in and the time zone. Deploy to Cloudflare creates it;
+  // by hand: `npx wrangler kv namespace create OFFHAND_KV` and paste the id here.
+  "kv_namespaces": [{ "binding": "OFFHAND_KV", "id": "9d61bb549e754516b1fe82673967392a" }]
+  // No "vars" and no secrets here. Deploy to Cloudflare shows a box for every one it finds, and
+  // none is needed: the defaults are in src/index.ts. To change one, add a "vars" block:
+  //   "vars": {
+  //     "DEFAULT_LIST": "tasks",              // where items go when no list is named
+  //     "TIME_ZONE": "America/Los_Angeles",   // otherwise the browser's, from when Roma was connected
+  //     "SAY_MODEL": "claude-opus-5-5",       // POST /say only
+  //     "SAY_EFFORT": "low",                  // POST /say only
+  //     "SAY_MAX_TOKENS": "1024"              // POST /say only
+  //   }
+}
